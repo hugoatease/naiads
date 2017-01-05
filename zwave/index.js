@@ -1,6 +1,6 @@
 import amqp, { Channel } from 'amqplib';
 import OZW from 'openzwave-shared';
-// import commandHandler from './commandHandler';
+import commandHandler from './commandHandler';
 import eventHandler from './eventHandler';
 
 const zwave = new OZW();
@@ -15,7 +15,7 @@ amqp.connect('amqp://zwave:zwave@192.168.2.1/').then(connection => {
     zwave.on('driver ready', (homeId) => {
       channel.assertQueue(`zwave-${homeId}`, {durable: true}).then(info => {
         const { queue } = info;
-        // channel.consume(queue, commandHandler);
+        channel.consume(queue, commandHandler);
       });
     });
     zwave.connect('/dev/ttyAMA0');
