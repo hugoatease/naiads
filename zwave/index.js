@@ -1,7 +1,8 @@
-import amqp, { Channel } from 'amqplib';
-import OZW from 'openzwave-shared';
-import commandHandler from './commandHandler';
-import eventHandler from './eventHandler';
+var amqp = require('amqplib');
+var Channel = require('amqplib').Channel;
+var OZW = require('openzwave-shared');
+var commandHandler = require('./commandHandler');
+var eventHandler = require('./eventHandler');
 
 const zwave = new OZW();
 

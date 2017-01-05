@@ -1,0 +1,23 @@
+{
+  "name": "naiads-zwave",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hugoatease/naiads.git"
+  },
+  "author": "Hugo Caille <hugo@caille.me>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/hugoatease/naiads/issues"
+  },
+  "homepage": "https://github.com/hugoatease/naiads#readme",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "openzwave-shared": "^1.2.5"
+  }
+}

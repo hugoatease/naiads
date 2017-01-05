@@ -38,7 +38,7 @@ const handleControllerCommand = (nodeId, ctrlState, ctrlError, helpmsg) => {
 
 }
 
-export default function (zwave, channel, exchange) {
+module.exports = function (zwave, channel, exchange) {
   const wrapper = (cb) => (...args) => cb(channel, exchange, ...args);
 
   zwave.on('node added', wrapper(handleNodeAdded));
