@@ -18,6 +18,7 @@
   "homepage": "https://github.com/hugoatease/naiads#readme",
   "dependencies": {
     "amqplib": "^0.5.1",
+    "config": "^1.24.0",
     "openzwave-shared": "^1.2.5"
   }
 }

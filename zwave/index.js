@@ -1,3 +1,4 @@
+var config = require('config');
 var amqp = require('amqplib');
 var Channel = require('amqplib').Channel;
 var OZW = require('openzwave-shared');
@@ -6,7 +7,7 @@ var eventHandler = require('./eventHandler');
 
 const zwave = new OZW();
 
-amqp.connect('amqp://zwave:zwave@192.168.2.1/').then(connection => {
+amqp.connect(config.get('amqp.uri')).then(connection => {
   connection.createChannel().then(channel => {
     channel.assertExchange('zwave-events', 'fanout', {durable: true}).then(info => {
       const { exchange } = info;
@@ -19,6 +20,6 @@ amqp.connect('amqp://zwave:zwave@192.168.2.1/').then(connection => {
         channel.consume(queue, commandHandler);
       });
     });
-    zwave.connect('/dev/ttyAMA0');
+    zwave.connect(config.get('zwave.device'));
   });
 });
