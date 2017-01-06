@@ -1,21 +1,21 @@
 const toContent = (data) => Buffer.from(JSON.stringify(data), 'utf8');
 
 const handleNodeAdded = (channel, exchange, nodeId) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'NODE_ADDED',
     nodeId
   }));
 }
 
 const handleNodeRemoved = (channel, exchange, nodeId) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'NODE_REMOVED',
     nodeId
   }));
 }
 
 const handleNodeAvailable = (channel, exchange, nodeId, nodeInfo) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'NODE_AVAILABLE',
     nodeId,
     nodeInfo
@@ -23,7 +23,7 @@ const handleNodeAvailable = (channel, exchange, nodeId, nodeInfo) => {
 }
 
 const handleNodeReady = (channel, exchange, nodeId, nodeInfo) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'NODE_READY',
     nodeId,
     nodeInfo
@@ -31,7 +31,7 @@ const handleNodeReady = (channel, exchange, nodeId, nodeInfo) => {
 }
 
 const handleNodeEvent = (channel, exchange, nodeId, data) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'NODE_EVENT',
     nodeId,
     data
@@ -39,7 +39,7 @@ const handleNodeEvent = (channel, exchange, nodeId, data) => {
 }
 
 const handleValueAdded = (channel, exchange, nodeId, commandClass, valueId) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'VALUE_ADDED',
     nodeId,
     commandClass,
@@ -48,7 +48,7 @@ const handleValueAdded = (channel, exchange, nodeId, commandClass, valueId) => {
 }
 
 const handleValueChanged = (channel, exchange, nodeId, commandClass, valueId) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'VALUE_CHANGED',
     nodeId,
     commandClass,
@@ -57,7 +57,7 @@ const handleValueChanged = (channel, exchange, nodeId, commandClass, valueId) =>
 }
 
 const handleValueRefreshed = (channel, exchange, nodeId, commandClass, valueId) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'VALUE_REFRESHED',
     nodeId,
     commandClass,
@@ -66,7 +66,7 @@ const handleValueRefreshed = (channel, exchange, nodeId, commandClass, valueId) 
 }
 
 const handleValueRemoved = (channel, exchange, nodeId, commandClass, instance, index) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'VALUE_REMOVED',
     nodeId,
     commandClass,
@@ -76,7 +76,7 @@ const handleValueRemoved = (channel, exchange, nodeId, commandClass, instance, i
 }
 
 const handleControllerCommand = (channel, exchange, nodeId, ctrlState, ctrlError, helpmsg) => {
-  channel.publish(exchange, null, toContent({
+  channel.publish(exchange, '', toContent({
     event: 'CONTROLLER_COMMAND',
     nodeId,
     ctrlState,
