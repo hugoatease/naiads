@@ -1,41 +1,86 @@
 const handleNodeAdded = (channel, exchange, nodeId) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'NODE_ADDED',
+    nodeId
+  }));
 }
 
 const handleNodeRemoved = (channel, exchange, nodeId) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'NODE_REMOVED',
+    nodeId
+  }));
 }
 
 const handleNodeAvailable = (channel, exchange, nodeId, nodeInfo) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'NODE_AVAILABLE',
+    nodeId,
+    nodeInfo
+  }));
 }
 
 const handleNodeReady = (channel, exchange, nodeId, nodeInfo) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'NODE_READY',
+    nodeId,
+    nodeInfo
+  }));
 }
 
 const handleNodeEvent = (channel, exchange, nodeId, data) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'NODE_EVENT',
+    nodeId,
+    data
+  }));
 }
 
 const handleValueAdded = (channel, exchange, nodeId, commandClass, valueId) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'VALUE_ADDED',
+    nodeId,
+    commandClass,
+    valueId
+  }));
 }
 
 const handleValueChanged = (channel, exchange, nodeId, commandClass, valueId) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'VALUE_CHANGED',
+    nodeId,
+    commandClass,
+    valueId
+  }));
 }
 
 const handleValueRefreshed = (channel, exchange, nodeId, commandClass, valueId) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'VALUE_REFRESHED',
+    nodeId,
+    commandClass,
+    valueId
+  }));
 }
 
 const handleValueRemoved = (channel, exchange, nodeId, commandClass, instance, index) => {
-
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'VALUE_REMOVED',
+    nodeId,
+    commandClass,
+    instance,
+    index
+  }));
 }
 
-const handleControllerCommand = (nodeId, ctrlState, ctrlError, helpmsg) => {
-
+const handleControllerCommand = (channel, exchange, nodeId, ctrlState, ctrlError, helpmsg) => {
+  channel.publish(exchange, null, JSON.stringify({
+    event: 'CONTROLLER_COMMAND',
+    nodeId,
+    ctrlState,
+    ctrlError,
+    helpmsg
+  }));
 }
 
 module.exports = function (zwave, channel, exchange) {
