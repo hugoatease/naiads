@@ -29,4 +29,5 @@ amqp.connect(config.get('amqp.uri')).then(connection => {
 process.on('SIGINT', () => {
   zwave.writeConfig();
   zwave.disconnect(config.get('zwave.device'));
+  process.exit();
 })
