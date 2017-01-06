@@ -1,0 +1,9 @@
+<Options xmlns='http://code.google.com/p/open-zwave/'>
+  <Option name="logging" value="true" />
+  <Option name="UserPath" value="/home/pi/zwsettings" />
+  <Option name="Associate" value="true" />
+  <Option name="NotifyTransactions" value="false" />
+  <Option name="DriverMaxAttempts" value="5" />
+  <Option name="SaveConfiguration" value="true" />
+  <Option name="NetworkKey" value="0x85,0xb6,0x08,0x02,0xd3,0xb0,0x2d,0x51,0x32,0xb4,0x84,0xb5,0x98,0xe4,0xf3,0x06" />
+</Options>

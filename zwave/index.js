@@ -5,7 +5,9 @@ var OZW = require('openzwave-shared');
 var commandHandler = require('./commandHandler');
 var eventHandler = require('./eventHandler');
 
-const zwave = new OZW();
+const zwave = new OZW({
+  UserPath: '/home/pi/naiads/zwave/config'
+});
 
 amqp.connect(config.get('amqp.uri')).then(connection => {
   connection.createChannel().then(channel => {
@@ -23,3 +25,8 @@ amqp.connect(config.get('amqp.uri')).then(connection => {
     zwave.connect(config.get('zwave.device'));
   });
 });
+
+process.on('SIGINT', () => {
+  zwave.writeConfig();
+  zwave.disconnect(config.get('zwave.device'));
+})
