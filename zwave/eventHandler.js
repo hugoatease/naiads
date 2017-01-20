@@ -1,4 +1,6 @@
-const toContent = (data) => Buffer.from(JSON.stringify(data), 'utf8');
+const toContent = (data) => Buffer.from(JSON.stringify(Object.assign({
+  date: Date.now()
+}, data)), 'utf8');
 
 const handleNodeAdded = (channel, exchange, homeId, nodeId) => {
   channel.publish(exchange, '', toContent({
