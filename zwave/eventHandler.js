@@ -1,45 +1,51 @@
 const toContent = (data) => Buffer.from(JSON.stringify(data), 'utf8');
 
-const handleNodeAdded = (channel, exchange, nodeId) => {
+const handleNodeAdded = (channel, exchange, homeId, nodeId) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'NODE_ADDED',
     nodeId
   }));
 }
 
-const handleNodeRemoved = (channel, exchange, nodeId) => {
+const handleNodeRemoved = (channel, exchange, homeId, nodeId) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'NODE_REMOVED',
     nodeId
   }));
 }
 
-const handleNodeAvailable = (channel, exchange, nodeId, nodeInfo) => {
+const handleNodeAvailable = (channel, exchange, homeId, nodeId, nodeInfo) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'NODE_AVAILABLE',
     nodeId,
     nodeInfo
   }));
 }
 
-const handleNodeReady = (channel, exchange, nodeId, nodeInfo) => {
+const handleNodeReady = (channel, exchange, homeId, nodeId, nodeInfo) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'NODE_READY',
     nodeId,
     nodeInfo
   }));
 }
 
-const handleNodeEvent = (channel, exchange, nodeId, data) => {
+const handleNodeEvent = (channel, exchange, homeId, nodeId, data) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'NODE_EVENT',
     nodeId,
     data
   }));
 }
 
-const handleValueAdded = (channel, exchange, nodeId, commandClass, valueId) => {
+const handleValueAdded = (channel, exchange, homeId, nodeId, commandClass, valueId) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'VALUE_ADDED',
     nodeId,
     commandClass,
@@ -47,8 +53,9 @@ const handleValueAdded = (channel, exchange, nodeId, commandClass, valueId) => {
   }));
 }
 
-const handleValueChanged = (channel, exchange, nodeId, commandClass, valueId) => {
+const handleValueChanged = (channel, exchange, homeId, nodeId, commandClass, valueId) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'VALUE_CHANGED',
     nodeId,
     commandClass,
@@ -56,8 +63,9 @@ const handleValueChanged = (channel, exchange, nodeId, commandClass, valueId) =>
   }));
 }
 
-const handleValueRefreshed = (channel, exchange, nodeId, commandClass, valueId) => {
+const handleValueRefreshed = (channel, exchange, homeId, nodeId, commandClass, valueId) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'VALUE_REFRESHED',
     nodeId,
     commandClass,
@@ -65,8 +73,9 @@ const handleValueRefreshed = (channel, exchange, nodeId, commandClass, valueId) 
   }));
 }
 
-const handleValueRemoved = (channel, exchange, nodeId, commandClass, instance, index) => {
+const handleValueRemoved = (channel, exchange, homeId, nodeId, commandClass, instance, index) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'VALUE_REMOVED',
     nodeId,
     commandClass,
@@ -75,8 +84,9 @@ const handleValueRemoved = (channel, exchange, nodeId, commandClass, instance, i
   }));
 }
 
-const handleControllerCommand = (channel, exchange, nodeId, ctrlState, ctrlError, helpmsg) => {
+const handleControllerCommand = (channel, exchange, homeId, nodeId, ctrlState, ctrlError, helpmsg) => {
   channel.publish(exchange, '', toContent({
+    homeId,
     event: 'CONTROLLER_COMMAND',
     nodeId,
     ctrlState,
@@ -85,8 +95,8 @@ const handleControllerCommand = (channel, exchange, nodeId, ctrlState, ctrlError
   }));
 }
 
-module.exports = function (zwave, channel, exchange) {
-  const wrapper = (cb) => (...args) => cb(channel, exchange, ...args);
+module.exports = function (zwave, homeId, channel, exchange) {
+  const wrapper = (cb) => (...args) => cb(channel, exchange, homeId, ...args);
 
   zwave.on('node added', wrapper(handleNodeAdded));
   zwave.on('node removed', wrapper(handleNodeRemoved));

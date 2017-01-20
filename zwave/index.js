@@ -11,12 +11,11 @@ const zwave = new OZW({
 
 amqp.connect(config.get('amqp.uri')).then(connection => {
   connection.createChannel().then(channel => {
-    channel.assertExchange('zwave-events', 'fanout', {durable: true}).then(info => {
-      const { exchange } = info;
-      eventHandler(zwave, channel, exchange);
-    });
-
     zwave.on('driver ready', (homeId) => {
+      channel.assertExchange('zwave-events', 'fanout', {durable: true}).then(info => {
+        const { exchange } = info;
+        eventHandler(zwave, homeId, channel, exchange);
+      });
       channel.assertQueue(`zwave-${homeId}`, {durable: true}).then(info => {
         const { queue } = info;
         channel.consume(queue, commandHandler);
