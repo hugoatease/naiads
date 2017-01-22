@@ -9,12 +9,14 @@ const influx = new Influx.InfluxDB({
 });
 
 const valueChanged = (data, ack) => {
-  const { homeId, nodeId } = data;
+  const { homeId, nodeId, date } = data;
   const { label, value, units, genre } = data.valueId;
+  console.log(homeId, nodeId, date, label, value, units, genre);
   if (genre === 'user') {
     influx.writeMeasurement(`${label.toLowerCase().replace(' ', '-')}`, [{
       tags: { homeId, nodeId },
-      fields: { value }
+      fields: { value },
+      timestamp: date * Math.pow(10, 6)
     }]).then(() => ack());
   }
 }
