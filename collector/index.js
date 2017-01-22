@@ -18,6 +18,8 @@ const valueChanged = (data, ack) => {
       fields: { value },
       timestamp: date * Math.pow(10, 6)
     }]).then(() => ack());
+  } else {
+    ack();
   }
 }
 
