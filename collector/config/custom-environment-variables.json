@@ -1,0 +1,10 @@
+{
+  "amqp": {
+    "uri": "NAIADS_AMQP_URI"
+  },
+  "influx": {
+    "host": "NAIADS_INFLUX_HOST",
+    "port": "NAIADS_INFLUX_PORT",
+    "db": "NAIADS_INFLUX_DB"
+  }
+}
