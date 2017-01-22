@@ -32,6 +32,8 @@ const eventHandler = (channel) => (message) => {
   const content = JSON.parse(message.content);
   if (eventMappings[content.event]) {
     eventMappings[content.event](content, ack);
+  } else {
+    ack();
   }
 }
 
