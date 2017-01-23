@@ -20,7 +20,7 @@ amqp.connect(config.get('amqp.uri')).then(connection => {
         const { queue } = queueInfo;
         channel.assertExchange('zwave-commands', 'direct').then(exchangeInfo => {
           const { exchange } = exchangeInfo;
-          channel.bindQueue(queue, exchange, homeId).then(() => {
+          channel.bindQueue(queue, exchange, `${homeId}`).then(() => {
             channel.consume(queue, commandHandler(channel, zwave));
           });
         });
