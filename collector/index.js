@@ -30,7 +30,7 @@ const eventMappings = {
 const eventHandler = (channel) => (message) => {
   const ack = () => channel.ack(message);
   const content = JSON.parse(message.content);
-  if (eventMappings[content.event]) {
+  if (content.event && eventMappings[content.event]) {
     eventMappings[content.event](content, ack);
   } else {
     ack();
@@ -40,9 +40,12 @@ const eventHandler = (channel) => (message) => {
 amqp.connect(config.get('amqp.uri')).then(connection => {
   connection.createChannel().then(channel => {
     channel.assertQueue('naiads-collector').then(() => {
-      channel.bindQueue('naiads-collector', 'zwave-events', '').then(() => {
-        channel.consume('naiads-collector', eventHandler(channel));
-      })
+      channel.assertExchange('zwave-events', 'fanout', {durable: true}).then(info => {
+        const { exchange } = info;
+        channel.bindQueue('naiads-collector', exchange, '').then(() => {
+          channel.consume('naiads-collector', eventHandler(channel));
+        });
+      });
     });
   });
 });
