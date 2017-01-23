@@ -16,9 +16,14 @@ amqp.connect(config.get('amqp.uri')).then(connection => {
         const { exchange } = info;
         eventHandler(zwave, homeId, channel, exchange);
       });
-      channel.assertQueue(`zwave-${homeId}`, {durable: true}).then(info => {
-        const { queue } = info;
-        channel.consume(queue, commandHandler);
+      channel.assertQueue(`zwave-${homeId}`, {durable: true}).then(queueInfo => {
+        const { queue } = queueInfo;
+        channel.assertExchange('zwave-commands', 'direct').then(exchangeInfo => {
+          const { exchange } = exchangeInfo;
+          channel.bindQueue(queue, exchange, homeId).then(() => {
+            channel.consume(queue, commandHandler(channel, zwave));
+          });
+        });
       });
     });
     zwave.connect(config.get('zwave.device'));
